@@ -1,0 +1,45 @@
+@mixin hovered {
+  transition: box-shadow 150ms ease-out, transform 150ms ease-out,
+    width 150ms ease, margin 150ms ease-out, background-color 250ms ease-out,
+    color 250ms ease-out, border-radius 300ms ease;
+  background-image: none;
+  color: black;
+  background-color: #fff;
+  // transform: scaleX(1.02);
+  box-shadow: none;
+  border-radius: 20px 5px 5px 20px;
+
+  .chats__chat__status {
+    transition-duration: 250ms;
+  }
+
+  .chats__chat__you {
+    background-color: #00000055;
+  }
+
+  .chats__chat__time {
+    color: white;
+    transform: translate(26px, 50%) scale(1.3);
+    opacity: 1;
+  }
+
+  .chats__chat__date {
+    transform: translate(-33px, 50%);
+    color: rgba(0, 0, 0, 0.637);
+    opacity: 1;
+  }
+}
+@mixin selected {
+  @include hovered();
+
+  .chats__chat__status {
+    transition-duration: 0.15s;
+    box-shadow: 0 0 10px 5px #1100ff99;
+  }
+  .chats__chat__you {
+    background-color: #00000055;
+  }
+  .chats__chat__new {
+    background-color: $cl-accent;
+  }
+}

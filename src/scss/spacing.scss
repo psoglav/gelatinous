@@ -1,0 +1,14 @@
+$divider: 0.2rem;
+$group: 0.7rem;
+
+$xs: 1.2rem;
+$sm: 1.7rem;
+$md: 2.2rem;
+$lg: 2.7rem;
+$xl: 3.2rem;
+
+@mixin xs-padding($fix-size: true) {
+  width: calc(100% - #{$xs * 2});
+  height: calc(100% - #{$xs * 2});
+  padding: $xs;
+}

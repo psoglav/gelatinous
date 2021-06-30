@@ -1,0 +1,6 @@
+@import './ui.scss';
+
+.gel {
+  @include gel(auto);
+  border-radius: 20px;
+}
