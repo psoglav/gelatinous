@@ -9,16 +9,18 @@
   </app-layout>
 </template>
 
-<script setup>
+<script>
 import Chats from '@/components/chats/Chats.vue'
 import Dialogue from '@/components/dialogue/Dialogue.vue'
 import AppLayout from '@/components/AppLayout.vue'
 
-import store from '@/store'
-
-import { provide } from 'vue'
-
-provide('store', store)
+export default {
+  components: {
+    Chats,
+    Dialogue,
+    AppLayout,
+  },
+}
 </script>
 
 <style lang="scss">
