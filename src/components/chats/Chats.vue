@@ -14,13 +14,13 @@
           :key="chat.id"
         >
           <div class="connector">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
+            <span class="connector__wire" :class="[chat.id]"></span>
           </div>
           <div class="chats__chat__avatar-container">
             <div class="chats__chat__status"></div>
@@ -65,6 +65,8 @@ import { useStore, mapGetters } from 'vuex'
 import { chats, getComputedRead, getComputedUnread } from './data.js'
 import { newMessage } from './helpers'
 
+import anime from 'animejs'
+
 export default {
   name: 'Chats',
   computed: {
@@ -81,6 +83,35 @@ export default {
 
     const unreadChats = getComputedUnread()
     const readChats = getComputedRead()
+
+    const openChat = (chat) => {
+      if (selectedChat.value && chat.id != selectedChat.value) {
+        anime.running.forEach((anim) => {
+          anim.pause()
+          anim.animatables.forEach((at) => {
+            at.target.style.transform = ''
+            at.target.style.opacity = ''
+          })
+        })
+        anime({
+          targets: `.${selectedChat.value}`,
+          translateX: [0, -10],
+          opacity: [1, 0],
+          delay: anime.stagger(100),
+          duration: 400,
+        })
+      }
+      anime({
+        targets: `.${chat.id}`,
+        translateX: [-10, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(20),
+        easing: 'spring(1, 80, 4, 10)',
+        duration: 100,
+      })
+      store.commit('SELECT_CHAT', chat)
+      console.log(anime.running)
+    }
 
     setTimeout(() => {
       chats.value[3].online = true
@@ -101,9 +132,7 @@ export default {
       chats,
       newMessage,
       selectedChat,
-      openChat: (chat) => {
-        store.commit('SELECT_CHAT', chat)
-      },
+      openChat,
     }
   },
 }
@@ -142,35 +171,36 @@ export default {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 3.6rem;
     cursor: pointer;
-    transition: box-shadow 150ms ease-out, transform 150ms ease-out,
-      margin 150ms ease-out, background-color 250ms ease-out,
-      color 250ms ease-out, border-radius 300ms ease, width 300ms ease;
+    transition: backdrop-filter 200ms ease, box-shadow 150ms ease-out,
+      transform 150ms ease-out, margin 300ms ease-out,
+      background-color 250ms ease-out, color 250ms ease-out,
+      border-radius 300ms ease, width 300ms ease;
     // overflow: hidden;
     color: white;
     box-shadow: 0 0 10px 1px black, $gel-shadows;
-    transition-duration: 400ms;
 
     @include gel(auto);
 
     border-radius: 20px;
 
-    &--active {
-      .connector {
-        position: absolute;
-        right: -#{$xs * 0.75};
-        height: 70%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+    .connector {
+      position: absolute;
+      right: -#{$xs * 0.75};
+      height: 70%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-        span {
-          width: 10px;
-          background-color: #9999ff;
-          box-shadow: 1px 1px 2px #ffffff50 inset, -1px -1px 2px #00006655 inset;
-          backdrop-filter: blur(30px);
-          height: 5px;
-          border-radius: 2px;
-        }
+      &__wire {
+        opacity: 0;
+        transition: all 100ms ease;
+        position: relative;
+        transform: translateX(-10px);
+        width: 10px;
+        background-color: #9999ff;
+        box-shadow: 1px 1px 2px #ffffff50 inset, -1px -1px 2px #00006655 inset;
+        height: 5px;
+        border-radius: 2px;
       }
     }
 
@@ -215,24 +245,6 @@ export default {
       overflow: hidden;
     }
 
-    &--unread {
-      background-color: $cl-bg-unread;
-      box-shadow: 0 0 5px #00000033, $gel-shadows;
-
-      &:hover {
-        background-color: #fff;
-        transform: scaleX(1.05);
-        box-shadow: 0 0 15px #ddd;
-
-        .chats__chat__new {
-          background-color: $cl-accent;
-        }
-      }
-    }
-
-    &--active {
-    }
-
     &__avatar-container {
       position: relative;
     }
@@ -265,29 +277,6 @@ export default {
       box-shadow: 0 0 20px 20px white;
     }
 
-    &--online {
-      .chats__chat__status {
-        transition-duration: 0.8s;
-        transform: translate(0%, 0%) scale(1);
-        position: absolute;
-        opacity: 1;
-        bottom: 4.5px;
-        right: 4.5px;
-        width: 8px;
-        height: 8px;
-        background-color: #fff;
-        border-radius: 100%;
-        box-shadow: 0 0 100px #ffffff00;
-      }
-
-      &:hover {
-        .chats__chat__status {
-          transition-duration: 0.15s;
-          box-shadow: 0 0 10px 5px #1100ff99;
-        }
-      }
-    }
-
     &__col {
       display: flex;
       flex-direction: column;
@@ -308,6 +297,10 @@ export default {
       font-size: 0.8rem;
       font-weight: bold;
       color: #eef;
+      width: 95%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
     }
 
     &__date,
@@ -319,7 +312,6 @@ export default {
       bottom: 50%;
       position: absolute;
       display: flex;
-      display: none;
       flex-direction: column;
     }
 
@@ -327,29 +319,61 @@ export default {
       right: -26px;
       opacity: 0;
     }
-
-    &__time {
-      &__hours {
-        display: block;
-      }
-    }
-
-    &:hover {
-      @include hovered;
-    }
-    &:active {
-      transform: none;
-    }
-
-    &--active {
-      @include selected;
-    }
   }
 
   &__transition {
     display: flex;
     flex-direction: column-reverse;
     transition: all 1s ease;
+  }
+}
+
+.chats__chat {
+  &:not(&--active, &--unread):hover {
+    @include hovered;
+  }
+  &:active {
+  }
+
+  &--unread {
+    background-color: $cl-bg-unread;
+    box-shadow: 0 0 5px #00000033, $gel-shadows;
+
+    &:hover {
+      @include hovered;
+      box-shadow: 0 0 15px black inset, 0 0 25px white;
+
+      .chats__chat__new {
+        background-color: $cl-accent;
+      }
+    }
+  }
+
+  &--online {
+    .chats__chat__status {
+      transition-duration: 0.8s;
+      transform: translate(0%, 0%) scale(1);
+      position: absolute;
+      opacity: 1;
+      bottom: 4.5px;
+      right: 4.5px;
+      width: 8px;
+      height: 8px;
+      background-color: #fff;
+      border-radius: 100%;
+      box-shadow: 0 0 100px #ffffff00;
+    }
+
+    &:hover {
+      .chats__chat__status {
+        transition-duration: 0.15s;
+        box-shadow: 0 0 10px 5px #1100ff99;
+      }
+    }
+  }
+
+  &--active {
+    @include selected;
   }
 }
 

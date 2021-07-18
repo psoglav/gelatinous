@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 
 export const chats = ref([
   {
-    id: '9283dj',
+    id: 'aaaaaa9283dj',
     name: 'Rhys Hawkins',
     preview: 'Realy nice, but it doesnt workt if you have multiple divs or mutliple P s in the scrolling content :( ',
     at: Date.now(),
@@ -12,7 +12,7 @@ export const chats = ref([
     online: true,
   },
   {
-    id: 'a0-9skd-asd',
+    id: 'a09skdasd',
     name: 'Nirmal Jasmatiya',
     preview: 'To answer the question if someone falls on it because of the obsolescence, it\'s quite simple in fact :). put the whole thing in a div and then put the elements in span codepen.io/scwall/pen/mdemeER',
     at: Date.now(),
@@ -21,7 +21,7 @@ export const chats = ref([
     unread: 2,
   },
   {
-    id: 'asd12d-asd',
+    id: 'asd12dasd',
     name: 'Joaquin Marquez',
     preview: 'how do I make it repeat without any white spaces between the last span and repeated first span (No white spaces after last span?) ',
     at: Date.now(),
@@ -30,7 +30,7 @@ export const chats = ref([
     unread: false,
   },
   {
-    id: 'a0-9s90-k1s',
+    id: 'a09s90k1s',
     name: 'Jordan Singer',
     preview: 'your argument DOESN\'T make the tag not obsolete',
     at: Date.now() + 100,
@@ -48,7 +48,7 @@ export const chats = ref([
     unread: false,
   },
   {
-    id: 'aso0-kd90as-d',
+    id: 'aso0kd90asd',
     name: 'Ashley Patterson',
     preview: 'I am just reflecting on using a Marquee Effect in general, just as an answer to people saying: "Don\'t move the text !" Implementing it with CSS instead of HTML <marquee> is better and reasonable IMO',
     at: Date.now(),
@@ -57,7 +57,7 @@ export const chats = ref([
     unread: false,
   },
   {
-    id: 'as9o-0dkaso0-d',
+    id: 'as9o0dkaso0d',
     name: 'Yael Lyons',
     preview: 'some some preview data',
     at: Date.now(),
@@ -67,7 +67,7 @@ export const chats = ref([
     you: true,
   },
   {
-    id: '1o-2l090-odas',
+    id: 'o2l090odas',
     name: 'Brian Smith',
     preview: 'no',
     at: Date.now(),
@@ -76,7 +76,7 @@ export const chats = ref([
     unread: false,
   },
   {
-    id: 'do0-1k29d10-dk',
+    id: 'do01k29d10dk',
     name: 'Mattie Leon',
     preview: 'good-good!',
     at: Date.now(),
@@ -85,7 +85,7 @@ export const chats = ref([
     unread: false,
   },
   {
-    id: 'l,.k90-sai90',
+    id: 'lk90sai90',
     name: 'Emeline Duarte',
     preview: 'well shit happens',
     at: Date.now(),
